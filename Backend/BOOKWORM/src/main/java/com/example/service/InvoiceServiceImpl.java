@@ -58,7 +58,6 @@ public class InvoiceServiceImpl implements IInvoiceService {
 
     
     // Invoice Preview (P + R + L)
-  
     @Override
     public InvoicePreviewResponseDTO previewInvoice(Integer userId) {
 
@@ -151,9 +150,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
         return response;
     }
 
-    // ===============================
     // Generate Invoice (P + R + L)
-    // ===============================
     @Override
     @Transactional
     public InvoiceResponseDTO generateInvoice(Integer userId) {
@@ -245,7 +242,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
 
                 shelfRepository.save(shelf);
 
-                // ✅ Generate Royalty for Rent
+                // Generate Royalty for Rent
                 royaltyTransactionService.generateRoyalty(item.getCustomer().getUserId(), product, 'R', total, perDay,
                         1, days, invoice);
             }
@@ -297,7 +294,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
                 shelf.setTranType('P');
                 shelfRepository.save(shelf);
 
-                // ✅ Generate Royalty for Purchase
+                // Generate Royalty for Purchase
                 royaltyTransactionService.generateRoyalty(item.getCustomer().getUserId(), product, 'P', saleTotal,
                         price,
                         item.getQuantity(), 0, invoice);
@@ -332,9 +329,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
         return response;
     }
 
-    // ===============================
     // Fetch Invoices
-    // ===============================
     @Override
     public List<Invoice> getInvoicesByCustomer(Integer userId) {
         return invoiceRepository.findByUserId(userId);
@@ -346,9 +341,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
                 .orElseThrow(() -> new RuntimeException("Invoice not found"));
     }
 
-    // ===============================
     // Effective Price Helper
-    // ===============================
     private BigDecimal getEffectivePrice(Product product) {
 
         LocalDate today = LocalDate.now();
